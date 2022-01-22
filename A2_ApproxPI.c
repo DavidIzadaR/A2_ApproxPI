@@ -18,7 +18,7 @@ int main()
 {
     int     num = 22;
     int     den = 7;
-    double  error = fabs((double)num / den - PI);
+    double  error = Diff(22, 7);
 
     printf("22 / 7 => error %E\n", error);
     for (den = 8; den < 10000; den++)
