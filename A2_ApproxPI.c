@@ -1,37 +1,30 @@
-// A2_ApproxPI.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// A2_ApproxPI.c
 //
 
 #include <stdio.h>
 #include <math.h>
 
-#define PI 3.14159
+double PI = 3.1415926535898;
 
-// Look for a better approximation of PI as a fraction than 22 / 7
+// Look for better num/den approximations of PI than 22 / 7
 // https://tomroelandts.com/articles/fractional-approximations-of-pi
 
 int main()
 {
-    int a, b;
-    int i;
-    float result;
+    int     num = 22;
+    int     den = 7;
+    double  error = fabs((double)num / den - PI);
 
-    while (1)
+    printf("22 / 7 => error %E\n", error);
+    do
     {
-        printf("Enter a fraction: ");
-        i = scanf("%d / %d", &a, &b);
-        if (i != 2)
+        den++;
+        num = (int)floor(den * PI);
+
+        if ((fabs((double)num / den - PI) < error) || (fabs((double)++num / den - PI) < error))
         {
-            printf("Please, correct the fraction!");
-            continue;
+            error = fabs((double)num / den - PI);
+            printf("%d / %d => error %E\n", num, den, error);
         }
-        result = (float)a / b;
-        printf("The difference between %f and PI is %f ...", result, fabs(result - PI));
-
-        if (fabs(result - PI) < 0.0001)
-            break;
-        else
-            printf(" try again.\n");
-    }
-
-    printf("\n");
+    } while (den < 10000);
 }
